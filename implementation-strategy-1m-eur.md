@@ -18,11 +18,12 @@ This document outlines a strategic 4-month implementation plan to deploy €1M i
 
 ---
 
-## Phase 1: Foundation & De-risking (Month 1)
+## Phase 1: Foundation & Technology Evaluation (Month 1)
 **Budget: €250,000**
 
 ### Objectives
-- Prove technical feasibility
+- Evaluate technology options and select optimal approach
+- Build Trust Layer implementation
 - Establish safety architecture
 - Demonstrate regulatory alignment
 
@@ -31,29 +32,38 @@ This document outlines a strategic 4-month implementation plan to deploy €1M i
 | Category | Amount | Details |
 |----------|---------|---------|
 | **Core Team** | €100,000 | 2 senior engineers, 1 banking domain expert, 1 compliance specialist (part-time) |
-| **Infrastructure** | €40,000 | Cloud setup, development environments, security tools |
-| **LLM Testing** | €30,000 | API credits for multiple providers (OpenAI, Anthropic, Azure) |
+| **Azure Infrastructure** | €35,000 | Azure subscription, OpenAI Service, Cognitive Services, Functions |
+| **LLM Testing** | €30,000 | API credits for comparison (Azure OpenAI, Anthropic, Google Vertex) |
+| **Technology Evaluation** | €15,000 | Prototype multiple approaches (pure cloud, LangChain, Rasa if needed) |
 | **Compliance Review** | €25,000 | Legal review, regulatory mapping, initial documentation |
-| **Synthetic Data** | €20,000 | Test data generation, banking scenario development |
-| **Tools & Licenses** | €15,000 | Development tools, monitoring software, security scanners |
-| **External Validation** | €20,000 | Independent security audit of architecture |
+| **Synthetic Data** | €20,000 | 10,000+ test conversations, adversarial scenarios, threat testing |
+| **Tools & Licenses** | €10,000 | Development tools, monitoring software, security scanners |
+| **External Validation** | €15,000 | Independent review of Trust Layer architecture |
 
 ### Deliverables for Milestone 1
 
-✓ **Technical Proof-of-Concept**
-- Working Trust Layer with PII masking
-- Multi-guard validation system operational
-- 3+ LLM providers integrated via adapter pattern
+✓ **Trust Layer Implementation**
+- Working InputProcessor, ConstrainedLLM, and Guard classes
+- Technology evaluation complete with recommendation
+- 3+ LLM providers tested and compared
+- Optimal approach selected (cloud-native vs. framework)
+- Workspace isolation architecture designed for safe deployments
 
 ✓ **Safety Demonstration**
-- 1,000+ synthetic conversations tested
+- 1,000+ synthetic conversations tested including:
+  - Banking intents across 20+ categories
+  - Adversarial attacks (prompt injection, jailbreaks)
+  - Edge cases and error scenarios
+  - Compliance validation tests
 - Zero unauthorized actions in red-team testing
+- 100% detection of adversarial attempts
 - <0.1% compliance violations
+- All guard layers operational with parallel execution
 
 ✓ **Regulatory Package**
 - Complete mapping to EU AI Act requirements
 - UK PRA SS1/23 compliance documentation
-- Initial audit trail implementation
+- Audit trail implementation with Azure Monitor
 
 ### Success Metrics
 - Response time <3 seconds (95th percentile)
@@ -90,10 +100,20 @@ This document outlines a strategic 4-month implementation plan to deploy €1M i
 - 20+ banking intents fully implemented
 - Multi-language support (English, German, Spanish)
 - Complete audit logging and monitoring
+- Workspace-based deployment architecture operational
+- Canary deployment capability with traffic routing
 
 ✓ **Business Value Demonstration**
-- 5,000+ synthetic conversations validated
+- 5,000+ synthetic conversations validated including:
+  - Multi-turn dialogue flows
+  - Context switching scenarios
+  - Multilingual variations (English, German, Spanish)
+  - Adversarial testing (social engineering, data extraction)
+  - Compliance edge cases
+- Intent accuracy >95% for banking intents
+- Entity extraction F1 score >90%
 - 85% task completion rate achieved
+- 100% adversarial attack detection
 - Cost analysis showing 60% reduction vs human agents
 
 ✓ **Integration Capabilities**
@@ -137,6 +157,8 @@ This document outlines a strategic 4-month implementation plan to deploy €1M i
 - 100+ real users (employees/volunteers)
 - 10,000+ real conversations processed
 - Zero critical incidents
+- Multiple workspace configurations tested in parallel
+- Successful canary deployments with instant rollback capability
 
 ✓ **Performance Evidence**
 - Average response time <1.5 seconds

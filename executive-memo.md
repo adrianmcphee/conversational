@@ -17,19 +17,19 @@ Banks face increasing pressure to provide 24/7 intelligent customer service whil
 
 ## Our Solution: The Trust Layer Approach
 
-We propose a **multi-layered defense architecture** that harnesses LLM capabilities while maintaining banking-grade safety:
+We propose implementing a **Trust Layer** - custom programmatic supervision around LLMs - rather than adopting heavy conversational frameworks. This gives us maximum control with minimal complexity.
 
 ### Core Principle
-> **LLMs are brilliant consultants that require constant supervision, not autonomous agents.**
+> **LLMs are brilliant consultants that require constant supervision, not autonomous agents. We implement this supervision through code, not frameworks.**
 
 ### How It Works
 
-**1. Every interaction passes through multiple safety gates:**
-- **Input Gate**: Removes personal information before LLM processing
-- **Risk Assessment**: Routes high-risk requests to deterministic systems
-- **Response Generation**: LLMs operate within strict templates and boundaries
-- **Validation Gate**: Multiple guards check every response before delivery
-- **Action Gate**: LLMs can only suggest actions, never execute them
+**1. Custom Python classes enforce supervision at every step:**
+- **InputProcessor**: Masks PII and routes based on risk before LLM sees anything
+- **ConstrainedLLM**: Forces responses into approved templates with validation loops
+- **ResponseValidator**: Multiple parallel checks that ALL must pass
+- **ActionAuthorizer**: Ensures LLMs only suggest, never execute
+- **BankingOperationHandler**: Critical operations bypass LLMs entirely
 
 **2. Risk-based routing ensures appropriate handling:**
 - **Critical Operations** (transfers, fraud reports): Bypass LLMs entirely
@@ -47,8 +47,13 @@ We propose a **multi-layered defense architecture** that harnesses LLM capabilit
 ### 1. **Model Stacking for Redundancy**
 Unlike single-model approaches, we deploy 3-5 independent validation models for high-risk operations, ensuring no single point of failure.
 
-### 2. **Vendor Independence**
-Our adapter pattern allows switching between LLM providers (OpenAI, Anthropic, local models) without architectural changes, avoiding vendor lock-in.
+### 2. **Technology-Agnostic Approach**
+Rather than committing to heavy frameworks upfront, we'll evaluate multiple options in Month 1:
+- Pure cloud services (Azure OpenAI + serverless functions)
+- Lightweight orchestration (LangChain, Semantic Kernel)
+- Traditional frameworks (Rasa, Dialogflow) only if they add clear value
+
+Our adapter pattern ensures we can switch between LLM providers without architectural changes.
 
 ### 3. **Regulatory Pre-Alignment**
 Built from day one to comply with:
@@ -59,6 +64,13 @@ Built from day one to comply with:
 
 ### 4. **Fail-Safe Architecture**
 System gracefully degrades to rule-based responses if any component fails, ensuring continuous operation.
+
+### 5. **Workspace-Based Deployment**
+Revolutionary approach using isolated workspaces for each configuration, enabling:
+- Risk-free experimentation in production
+- Instant rollback without data migration
+- A/B testing of different models and configurations
+- Progressive canary deployments with real traffic
 
 ## Implementation Timeline
 
@@ -72,7 +84,11 @@ System gracefully degrades to rule-based responses if any component fails, ensur
 **Month 2: Intelligence**
 - Integrate multiple LLM providers
 - Add banking knowledge base
-- Generate 10,000+ test conversations
+- Generate 10,000+ synthetic test conversations including:
+  - Normal banking scenarios across 20+ intent categories
+  - Adversarial attacks and jailbreak attempts
+  - Compliance edge cases and regulatory tests
+  - Multilingual variations with cultural patterns
 
 **Month 3: Validation**
 - Complete compliance documentation
@@ -96,8 +112,8 @@ System gracefully degrades to rule-based responses if any component fails, ensur
 ## Investment Requirements
 
 ### Technology Stack
-- Open-source foundation (Rasa) for control
-- Cloud-agnostic deployment capability
+- Custom Trust Layer implementation in Python
+- Azure-native cloud services with portability
 - Multiple LLM provider integrations
 - Comprehensive monitoring infrastructure
 
