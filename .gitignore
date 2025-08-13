@@ -1,0 +1,96 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment (keep .env.example)
+.env
+.env.local
+.env.*.local
+proxy.env
+main.env
+postgres.env
+!.env.example
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+
+# K3D
+k3d-config.override.yaml
+
+# Static files
+static_collected/
+media/
+
+# Alembic (allow migration files)
+alembic/versions/__pycache__/
+!alembic/versions/*.py
+
+# Legacy
+.vagrant
+node_modules
+*.whoosh/
+static/hectic-client
+local_settings.py
+*.mo
+*.bak
+.dir-locals.el
+*.build
+*.exe
+
+# Generated Data
+data_management/synthetic_data/
+generated_data.json
+test_generated_data.json
+
+# Temporary files
+cookies.txt
+token.txt
+
+# Random
+theme-inspiration/
+.ruff_cache/
+.ruff_plugins/

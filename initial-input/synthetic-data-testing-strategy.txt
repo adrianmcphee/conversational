@@ -1,0 +1,202 @@
+﻿Synthetic Data Strategy for Conversational Banking Testing
+1. Core Dataset Categories
+A. Intent & Entity Recognition Data
+Banking-Specific Intents (20+ categories)
+* Account inquiries (balance, history, statements)
+* Transfer operations (domestic, international, P2P)
+* Card management (activate, block, PIN reset, limits)
+* Loan inquiries (rates, applications, payments)
+* Investment services (portfolio, trading, advice)
+* Dispute & fraud (transaction disputes, card theft)
+* Authentication flows (login, OTP, security questions)
+* Customer service (appointments, contact info, complaints)
+Entity Variations per Intent
+* Account types: checking, savings, credit, investment, mortgage
+* Amounts: various currencies, formats (€1,000 vs €1000 vs 1k euros)
+* Dates: relative (yesterday, last month) vs absolute (March 15th)
+* Recipients: names, IBANs, phone numbers, account nicknames
+B. Multi-Turn Conversation Flows
+Complete Transaction Scenarios
+User: "I want to transfer money"
+Bot: "I can help with that. What amount would you like to transfer?"
+User: "500 euros"
+Bot: "From which account?"
+User: "My savings"
+Bot: "And to which account or recipient?"
+User: "My checking account"
+Bot: "To confirm: Transfer €500 from Savings to Checking. Please enter your OTP."
+Interruption & Context Switch Scenarios
+User: "Transfer 200 to my checking"
+Bot: "From which account would you like to transfer?"
+User: "Actually, first show me my balance"
+Bot: "Your current balances are: Savings: €2,450, Checking: €890. Would you like to continue with the transfer?"
+C. Multilingual Variations
+Language-Specific Patterns
+* Formal vs informal address (German Sie/Du, Spanish Usted/Tú)
+* Currency formats by locale (€1.234,56 vs €1,234.56)
+* Date formats (DD/MM/YYYY vs MM/DD/YYYY)
+* Cultural banking terminology differences
+D. Edge Cases & Error Scenarios
+System Limitations
+* Insufficient funds scenarios
+* Maintenance windows ("Sorry, transfers are temporarily unavailable")
+* Daily/monthly limits exceeded
+* Suspicious activity triggers
+User Input Variations
+* Typos and misspellings ("ballance", "tranfer")
+* Ambiguous requests ("send money to John" - multiple Johns)
+* Incomplete information ("transfer some money")
+* Out-of-scope requests ("What's the weather?")
+________________
+2. Expected Outcome Framework
+A. Intent Classification Accuracy
+{
+  "input": "What's my checking account balance?",
+  "expected_intent": "account_balance_inquiry",
+  "expected_entities": {
+    "account_type": "checking"
+  },
+  "confidence_threshold": 0.85
+}
+B. Dialogue Flow Validation
+{
+  "conversation_id": "transfer_basic_001",
+  "turns": [
+    {
+      "user_input": "Transfer 500 euros",
+      "expected_action": "request_source_account",
+      "expected_slots": {"amount": 500, "currency": "EUR"}
+    },
+    {
+      "user_input": "From savings",
+      "expected_action": "request_destination_account",
+      "expected_slots": {"source_account": "savings"}
+    }
+  ],
+  "expected_final_state": "ready_for_authentication"
+}
+
+C. Compliance Validation
+{
+  "scenario": "high_value_transfer",
+  "input": "Send €15,000 to my friend",
+  "expected_compliance_triggers": [
+    "enhanced_due_diligence_required",
+    "aml_screening_needed",
+    "manager_approval_required"
+  ],
+  "expected_disclosures": [
+    "large_transfer_warning",
+    "fraud_prevention_notice"
+  ]
+}
+D. LLM Response Quality Metrics
+{
+  "input": "Why was my card declined?",
+  "expected_response_criteria": {
+    "mentions_common_causes": true,
+    "suggests_next_steps": true,
+    "maintains_professional_tone": true,
+    "avoids_speculation": true,
+    "includes_contact_option": true
+  },
+  "prohibited_content": [
+    "specific_account_details_without_auth",
+    "definitive_diagnosis_without_data"
+  ]
+}
+
+________________
+3. Data Generation Strategy
+A. Template-Based Generation
+Intent Templates with Variations
+transfer_templates = [
+    "Transfer {amount} from {source} to {destination}",
+    "Send {amount} to {destination}",
+    "Move {amount} from my {source} account",
+    "I want to transfer {amount}",
+    "Can you help me send {amount}?"
+]
+
+
+# Generate variations
+amounts = ["€500", "500 euros", "five hundred", "€500.00"]
+sources = ["savings", "checking", "my savings account"]
+destinations = ["checking", "John Smith", "IBAN DE89370400440532013000"]
+B. LLM-Assisted Generation
+Prompt for Realistic Variations
+Generate 50 different ways a customer might ask about their account balance, including:
+- Formal and informal language
+- Different account types
+- Various time periods
+- Common typos and colloquialisms
+- Multiple languages (English, German, Spanish, Dutch)
+
+________________
+C. Real Data Anonymization
+Synthetic Customer Profiles
+{
+  "customer_id": "SYNTH_001",
+  "accounts": {
+    "checking": {"balance": 2450.67, "currency": "EUR"},
+    "savings": {"balance": 15230.00, "currency": "EUR"}
+  },
+  "recent_transactions": [
+    {"date": "2025-08-10", "amount": -45.00, "description": "Grocery Store"}
+  ],
+  "preferences": {
+    "language": "en",
+    "communication_style": "formal"
+  }
+}
+4. Testing Framework Implementation
+A. Automated Test Suites
+Regression Testing
+* Intent classification accuracy >95% for core banking intents
+* Entity extraction F1 score >90%
+* Dialogue completion rate >85% for happy paths
+* Response time <2 seconds for 95% of queries
+Compliance Testing
+* 100% trigger rate for mandatory disclosures
+* 0% leakage of PII to external LLM calls
+* 100% audit trail completeness for financial transactions
+B. A/B Testing Framework
+Model Comparison
+* Rasa vs pure LLM for intent classification
+* Different LLM providers for response generation
+* Various confidence thresholds for human handoff
+C. Continuous Evaluation
+Production Monitoring
+* Real conversation analysis (with consent)
+* Intent drift detection
+* Response quality degradation alerts
+5. Implementation Roadmap
+Phase 1: Foundation
+* Generate 10,000 synthetic conversations for core banking intents
+* Build expected outcome validation framework
+* Set up automated testing pipeline
+Phase 2: Expansion
+* Add multilingual dataset (3 languages)
+* Include edge cases and error scenarios
+* Implement compliance validation tests
+Phase 3: Refinement
+* LLM-assisted data augmentation
+* Real conversation anonymization and inclusion
+* Performance benchmarking across models
+Phase 4: Integration
+* Connect to Backbase channels for end-to-end testing
+* Stress testing with concurrent conversations
+* Final validation before pilot deployment
+6. Success Metrics
+Quality Thresholds
+* Intent accuracy: >95% for banking intents
+* Entity extraction: >90% F1 score
+* Dialogue completion: >85% success rate
+* Compliance coverage: 100% for regulated flows
+* Response relevance: >4.0/5.0 human rating
+* Multilingual parity: <5% accuracy drop across languages
+Operational Metrics
+* Test execution time: <30 minutes for full suite
+* Data generation speed: 1000+ conversations per hour
+* Coverage: 100% of documented banking flows
+* Maintenance overhead: <4 hours/week for updates
